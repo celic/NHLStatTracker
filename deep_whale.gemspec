@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name        = "Deep Whale"
   s.version     = DeepWhale::VERSION
   s.authors     = ["Andrew Rempe","Chris Celi"]
-  s.email       = ["andrewrempe@gmail.com", "cceli@rpi.edu"]
+  s.email       = ["andrewrempe@gmail.com", "cceli@codequarry.net"]
   s.description = "Pulls stats from NHL.com."
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
