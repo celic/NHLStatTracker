@@ -20,6 +20,10 @@ points = Hash.new(0)
 goals = Hash.new(0)
 assists = Hash.new(0)
 
+shots_faced = Hash.new(0)
+saves_made = Hash.new(0)
+svpct = Hash.new(0)
+
 game_ids.each do |game_id|
     puts "Finding Game ID: #{game_id}"
     
@@ -94,10 +98,32 @@ game_ids.each do |game_id|
         assists[name] += player['a']
         points[name] += player['g'] + player['a']
     end
+    
+    contents['rosters']['home']['goalies'].each do |goalie|
+        number = goalie['num'].to_s
+        name = names[0][number]
+        shots_faced[name] += goalie['sa']
+        saves_made[name] += goalie['sv']
+        svpct[name] = (saves_made[name].to_f / shots_faced[name].to_f)
+    end
+    
+    contents['rosters']['away']['goalies'].each do |goalie|
+        number = goalie['num'].to_s
+        name = names[0][number]
+        shots_faced[name] += goalie['sa']
+        saves_made[name] += goalie['sv']
+        svpct[name] = (saves_made[name].to_f / shots_faced[name].to_f)
+    end
 end
 
 # Output
 puts 'Point totals:'
 points.sort{|x, y| y[1] <=> x[1] }.first(30).each do |name, total|
-        puts "#{name}: #{total}"
+    puts "#{name}: #{total}"
+end
+
+puts ''
+puts 'Goalie totals:'
+svpct.sort{|x, y| y[1] <=> x[1] }.each do |name, total|
+    puts "#{name}: #{total.round(3)}"
 end
