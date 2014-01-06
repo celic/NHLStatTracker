@@ -5,13 +5,11 @@ require "deep_whale/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "deep_whale"
+  s.name        = "Deep Whale"
   s.version     = DeepWhale::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of DeepWhale."
-  s.description = "TODO: Description of DeepWhale."
+  s.authors     = ["Andrew Rempe","Chris Celi"]
+  s.email       = ["andrewrempe@gmail.com", "cceli@rpi.edu"]
+  s.description = "Pulls stats from NHL.com."
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
