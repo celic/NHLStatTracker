@@ -109,7 +109,7 @@ game_ids.each do |game_id|
     
     contents['rosters']['away']['goalies'].each do |goalie|
         number = goalie['num'].to_s
-        name = names[0][number]
+        name = names[1][number]
         shots_faced[name] += goalie['sa']
         saves_made[name] += goalie['sv']
         svpct[name] = (saves_made[name].to_f / shots_faced[name].to_f)
