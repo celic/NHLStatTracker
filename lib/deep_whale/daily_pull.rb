@@ -31,13 +31,14 @@ game_id_contents.each do |game|
     # Get the date from the JSON
     game_date = Date.parse(game["est"].partition(" ")[0])
     
+    # Store all game ids from the date
     if game_date === date
-        puts game["id"]
+        game_ids << game["id"]
     end
     
 end
 
-=begin
+# Gather data from game ids
 game_ids.each do |game_id|
     puts "Finding Game ID: #{game_id}"
     
@@ -45,7 +46,9 @@ game_ids.each do |game_id|
     file = open("http://live.nhl.com/GameData/20132014/#{game_id}/gc/gcbx.jsonp")
     contents = file.read
     
-    
+    # Open Game ID File
+    game_id_file = open("http://live.nhl.com/GameData/SeasonSchedule-20132014.json")
+    game_id_contents = game_id_file.read
     
     # Remove GCBX.load
     contents = contents[10..-3]
@@ -86,15 +89,8 @@ game_ids.each do |game_id|
             end
         end
     end
-    
-    # Print out all names found
-    #(0..1).each do |index|
-    #        names[index].each do |number, name|
-    #            puts number + " " + name
-    #    end
-    #end
   
-    # Loop through all players
+    # Loop through all home players
     contents['rosters']['home']['skaters'].each do |player|
         number = player['num'].to_s
         name = names[0][number]
@@ -103,6 +99,7 @@ game_ids.each do |game_id|
         points[name] += player['g'] + player['a']
     end
     
+    # Loop through all away players
     contents['rosters']['away']['skaters'].each do |player|
         number = player['num'].to_s
         name = names[1][number]
@@ -110,34 +107,10 @@ game_ids.each do |game_id|
         assists[name] += player['a']
         points[name] += player['g'] + player['a']
     end
-    
-    contents['rosters']['home']['goalies'].each do |goalie|
-        number = goalie['num'].to_s
-        name = names[0][number]
-        shots_faced[name] += goalie['sa']
-        saves_made[name] += goalie['sv']
-        svpct[name] = (saves_made[name].to_f / shots_faced[name].to_f)
-    end
-    
-    contents['rosters']['away']['goalies'].each do |goalie|
-        number = goalie['num'].to_s
-        name = names[1][number]
-        shots_faced[name] += goalie['sa']
-        saves_made[name] += goalie['sv']
-        svpct[name] = (saves_made[name].to_f / shots_faced[name].to_f)
-    end
 end
 
 # Output
 puts 'Point totals:'
-points.sort{|x, y| y[1] <=> x[1] }.first(30).each do |name, total|
-    puts "#{name}: #{total}"
+points.sort{|x, y| y[1] <=> x[1] }.each do |name, total|
+    puts "#{name}: #{goals[name]}-#{assists[name]}-#{total}"
 end
-
-puts ''
-puts 'Goalie totals:'
-svpct.sort{|x, y| y[1] <=> x[1] }.each do |name, total|
-    puts "#{name}: #{total.round(3)}"
-end
-
-=end
