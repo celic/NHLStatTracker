@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    deep_whale (0.0.1)
+    Deep Whale (0.0.1)
       rails (~> 4.0.2)
 
 GEM
@@ -84,5 +84,5 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  deep_whale!
+  Deep Whale!
   sqlite3
